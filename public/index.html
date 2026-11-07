@@ -3,23 +3,23 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NEXUS AI</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;background:#080910;color:#eee;
- font-family:Tahoma,Arial,sans-serif;
- height:100dvh;display:flex;overflow:hidden
+ margin:0;background:#080b14;color:#f1f4ff;
+ font-family:Tahoma,Arial,sans-serif;height:100dvh;
+ display:flex;overflow:hidden
 }
 .sidebar{
- width:260px;background:#10111b;padding:22px;
- border-left:1px solid #252638;
- display:flex;flex-direction:column
+ width:250px;background:#101522;padding:20px;
+ border-left:1px solid #252c40;display:flex;
+ flex-direction:column
 }
 .logo{font-size:27px;font-weight:bold;color:#b58aff}
 .logo span{color:#fff}
-.sub{color:#888;font-size:12px;margin-top:8px}
+.sub{font-size:11px;color:#888;margin-top:8px}
 .new{
  margin-top:35px;padding:14px;border:1px solid #6944a0;
  border-radius:12px;background:#1b1429;color:white;
@@ -32,164 +32,192 @@ header{
  display:flex;align-items:center;justify-content:space-between;
  padding:0 22px
 }
-.status{font-size:12px;color:#65e6ad}
-.status:before{content:"●";margin-left:8px}
-#messages{
- flex:1;overflow-y:auto;padding:25px  max(18px,calc((100% - 850px)/2));
+.status{color:#62e6a0;font-size:12px}
+#chat{
+ flex:1;overflow-y:auto;padding:25px;
  display:flex;flex-direction:column;gap:20px
 }
-.welcome{text-align:center;margin:auto;color:#aaa}
+.welcome{text-align:center;margin:auto;color:#b8c0d8}
 .orb{
- width:85px;height:85px;border-radius:50%;
- margin:0 auto 22px;display:grid;place-items:center;
- background:radial-gradient(circle,#a86aff,#35165d 65%,#151020);
- box-shadow:0 0 45px #8b43db55;font-size:34px
+ width:100px;height:100px;border-radius:50%;
+ margin:0 auto 25px;
+ background:radial-gradient(circle,#d2a2ff,#7441bc,#17122b);
+ box-shadow:0 0 55px #8544dd88;
+ animation:pulse 3s infinite
 }
-.welcome h1{color:white;font-size:27px}
-.welcome p{font-size:14px;line-height:2}
+@keyframes pulse{
+ 50%{box-shadow:0 0 85px #a75bff}
+}
 .message{
- max-width:85%;padding:15px 18px;border-radius:17px;
- line-height:2;font-size:14px;white-space:pre-wrap;
- overflow-wrap:anywhere
+ max-width:750px;padding:16px 19px;
+ border-radius:16px;line-height:2;
+ white-space:pre-wrap;overflow-wrap:anywhere
 }
-.user{align-self:flex-start;background:#27203a;border:1px solid #51406c}
-.ai{align-self:flex-end;background:#151723;border:1px solid #303248}
+.user{
+ align-self:flex-start;background:#28213d;
+ border:1px solid #59427e
+}
+.bot{
+ align-self:flex-end;background:#141c2d;
+ border:1px solid #34435e
+}
+.sender{font-size:11px;color:#b78bff;margin-bottom:7px}
 .composer{
- width:min(850px,95%);margin:12px auto 24px;
- border:1px solid #44405a;background:#141522;
- border-radius:18px;padding:12px;display:flex;gap:10px;
- align-items:flex-end
+ padding:15px 22px 22px;
+ border-top:1px solid #242535;
+ background:#0d111d
+}
+.inputbox{
+ max-width:850px;margin:auto;display:flex;gap:10px;
+ background:#171e2e;border:1px solid #42415d;
+ border-radius:15px;padding:10px
 }
 textarea{
- flex:1;background:transparent;color:white;border:0;
- outline:none;resize:none;max-height:130px;
- font:14px Tahoma;line-height:2;padding:8px
+ flex:1;resize:none;background:transparent;
+ border:0;outline:0;color:white;font:14px Tahoma;
+ min-height:45px;max-height:130px;padding:12px
 }
-button{font-family:inherit}
-#send{
- background:linear-gradient(135deg,#a35cf4,#6334bc);
- color:white;border:0;border-radius:12px;
- padding:13px 19px;cursor:pointer
+button{
+ border:0;border-radius:11px;padding:12px 18px;
+ background:#9b65e9;color:white;font-weight:bold;
+ cursor:pointer
 }
-#send:disabled{opacity:.5}
-footer{text-align:center;color:#777;font-size:10px;padding-bottom:12px}
+button:disabled{opacity:.5}
+.footer{text-align:center;color:#777;font-size:10px;margin-top:12px}
 @media(max-width:650px){
- .sidebar{width:65px;padding:12px 7px;align-items:center}
- .logo{font-size:16px}.logo span,.sub,.new span,.sidebottom{display:none}
- .new{margin-top:30px;padding:12px;font-size:20px}
- header{height:60px;padding:0 13px}
- #messages{padding:18px 12px}
- .message{max-width:94%}
- .welcome h1{font-size:23px}
+ .sidebar{width:65px;padding:10px 5px;align-items:center}
+ .logo{font-size:13px}
+ .sub,.sidebottom{display:none}
+ .new{font-size:0;width:43px;padding:12px 5px;margin-top:25px}
+ .new:after{content:"+";font-size:22px}
+ header{padding:0 12px}
+ #chat{padding:15px 10px}
+ .composer{padding:10px}
+ .message{max-width:95%}
 }
 </style>
 </head>
 <body>
+
 <aside class="sidebar">
  <div class="logo">NEXUS<span> AI</span></div>
- <div class="sub">YOUR INTELLIGENT COMPANION</div>
- <button class="new" onclick="clearChat()">＋ <span>گفتگوی جدید</span></button>
- <div class="sidebottom">NEXUS CORE · VERSION 1.0</div>
+ <div class="sub">YOUR INTELLIGENT FUTURE</div>
+ <button class="new" onclick="newChat()">＋ گفتگوی جدید</button>
+ <div class="sidebottom">NEXUS AI SYSTEM<br>VERSION 2.0</div>
 </aside>
 
 <main>
- <header>
-  <strong>NEXUS / هوش مصنوعی</strong>
-  <span class="status">ONLINE</span>
- </header>
+<header>
+ <strong>NEXUS AI <span style="color:#ad7aff">/ دستیار هوشمند</span></strong>
+ <span class="status">● ONLINE</span>
+</header>
 
- <section id="messages">
-  <div class="welcome" id="welcome">
-   <div class="orb">✦</div>
-   <h1>سلام، من NEXUS هستم</h1>
-   <p>دستیار هوشمند تو برای فکر کردن، خلق کردن و کشف کردن.<br>امروز چه کاری برات انجام بدم؟</p>
-  </div>
- </section>
+<section id="chat">
+ <div class="welcome" id="welcome">
+  <div class="orb"></div>
+  <h2>به NEXUS AI خوش آمدی</h2>
+  <p>آینده هوش مصنوعی از اینجا شروع می‌شود.</p>
+  <small>هر سوالی داری بپرس...</small>
+ </div>
+</section>
 
- <div class="composer">
-  <textarea id="input" rows="1" placeholder="پیامت رو برای NEXUS بنویس..."></textarea>
+<div class="composer">
+ <div class="inputbox">
+  <textarea id="prompt" placeholder="پیامت رو برای NEXUS بنویس..."
+  rows="1"></textarea>
   <button id="send" onclick="sendMessage()">ارسال ↑</button>
  </div>
- <footer>NEXUS AI · POWERED BY OPENROUTER</footer>
+ <div class="footer">POWERED BY NEXUS AI • INTELLIGENCE WITHOUT LIMITS</div>
+</div>
 </main>
 
 <script>
-const messages = [];
-const box = document.getElementById("messages");
-const input = document.getElementById("input");
-const send = document.getElementById("send");
+const chat=document.getElementById("chat");
+const input=document.getElementById("prompt");
+const sendBtn=document.getElementById("send");
 
-function addMessage(text, type) {
- document.getElementById("welcome")?.remove();
- const el = document.createElement("div");
- el.className = "message " + type;
- el.textContent = text;
- box.appendChild(el);
- box.scrollTop = box.scrollHeight;
+let messages=[];
+
+function addMessage(role,text){
+ const welcome=document.getElementById("welcome");
+ if(welcome)welcome.remove();
+
+ const div=document.createElement("div");
+ div.className="message "+(role==="user"?"user":"bot");
+
+ const sender=document.createElement("div");
+ sender.className="sender";
+ sender.textContent=role==="user"?"YOU":"NEXUS AI";
+
+ const content=document.createElement("div");
+ content.textContent=text;
+
+ div.append(sender,content);
+ chat.appendChild(div);
+ chat.scrollTop=chat.scrollHeight;
 }
 
-async function sendMessage() {
- const text = input.value.trim();
- if (!text || send.disabled) return;
+function newChat(){
+ messages=[];
+ chat.innerHTML=`
+ <div class="welcome" id="welcome">
+ <div class="orb"></div>
+ <h2>گفتگوی جدید آغاز شد</h2>
+ <p>من آماده‌ام. چه کاری انجام بدیم؟</p>
+ </div>`;
+ input.value="";
+}
 
- input.value = "";
- input.style.height = "auto";
+async function sendMessage(){
+ const text=input.value.trim();
+ if(!text || sendBtn.disabled)return;
+
+ addMessage("user",text);
  messages.push({role:"user",content:text});
- addMessage(text,"user");
+ input.value="";
+ sendBtn.disabled=true;
+ sendBtn.textContent="...";
 
- send.disabled = true;
- send.textContent = "...";
- const loading = "در حال فکر کردن...";
- addMessage(loading,"ai");
- const loadingEl = box.lastElementChild;
+ const loading=document.createElement("div");
+ loading.className="message bot";
+ loading.textContent="NEXUS در حال فکر کردن است...";
+ chat.appendChild(loading);
 
- try {
-  const response = await fetch("/api/chat", {
+ try{
+  const response=await fetch("/api/chat",{
    method:"POST",
    headers:{"Content-Type":"application/json"},
    body:JSON.stringify({messages})
   });
 
-  const data = await response.json();
-  loadingEl.remove();
+  const data=await response.json();
 
-  if (!response.ok) throw new Error(data.error || "خطا در اتصال");
+  if(!response.ok){
+   throw new Error(data.error||"خطا در ارتباط با سرور");
+  }
 
-  const reply = data.reply || "پاسخی دریافت نشد.";
-  messages.push({role:"assistant",content:reply});
-  addMessage(reply,"ai");
+  if(!data.reply)throw new Error("پاسخی از سرور دریافت نشد");
 
- } catch(error) {
-  loadingEl.textContent = "خطا: " + error.message;
- } finally {
-  send.disabled = false;
-  send.textContent = "ارسال ↑";
+  loading.remove();
+  addMessage("assistant",data.reply);
+  messages.push({role:"assistant",content:data.reply});
+
+ }catch(error){
+  loading.remove();
+  addMessage("assistant","⚠️ خطا در اتصال: "+error.message);
+ }finally{
+  sendBtn.disabled=false;
+  sendBtn.textContent="ارسال ↑";
   input.focus();
  }
 }
 
-function clearChat() {
- messages.length = 0;
- box.innerHTML = `
- <div class="welcome" id="welcome">
- <div class="orb">✦</div>
- <h1>سلام، من NEXUS هستم</h1>
- <p>امروز چه کاری برات انجام بدم؟</p>
- </div>`;
-}
-
 input.addEventListener("keydown",e=>{
- if(e.key==="Enter" && !e.shiftKey){
+ if(e.key==="Enter"&&!e.shiftKey){
   e.preventDefault();
   sendMessage();
  }
 });
-
-input.addEventListener("input",()=>{
- input.style.height="auto";
- input.style.height=Math.min(input.scrollHeight,130)+"px";
-});
 </script>
 </body>
-  </html>
-  
+</html>
